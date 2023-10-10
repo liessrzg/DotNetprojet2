@@ -7,6 +7,12 @@
 *.userosscache
 *.sln.docstates
 
+
+#Ajoutez des règles pour exclure les dossiers 
+
+[Oo]bj/SsS
+[Bb]in/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
