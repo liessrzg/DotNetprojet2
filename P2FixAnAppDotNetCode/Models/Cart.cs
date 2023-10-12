@@ -11,24 +11,51 @@ namespace P2FixAnAppDotNetCode.Models
         /// <summary>
         /// Read-only property for dispaly only
         /// </summary>
-        public IEnumerable<CartLine> Lines => GetCartLineList();
+        private List<CartLine> _cartLines = new List<CartLine>();
 
         /// <summary>
         /// Return the actual cartline list
         /// </summary>
         /// <returns></returns>
+        public IEnumerable<CartLine> Lines => _cartLines;
+
         private List<CartLine> GetCartLineList()
         {
-            return new List<CartLine>();
+            return _cartLines;
         }
-
         /// <summary>
         /// Adds a product in the cart or increment its quantity in the cart if already added
         /// </summary>//
         public void AddItem(Product product, int quantity)
         {
-            // TODO implement the method
+            CartLine cartLine = null;
+
+            // Recherchez si le produit est déjà dans le panier
+            foreach (var line in _cartLines)
+            {
+                if (line.Product.Id == product.Id)
+                {
+                    cartLine = line;
+                    break;
+                }
+            }
+
+            // Si le produit est déjà dans le panier, augmentez la quantité
+            if (cartLine != null)
+            {
+                cartLine.Quantity += quantity;
+            }
+            // Sinon, ajoutez un nouvel élément CartLine au panier
+            else
+            {
+                _cartLines.Add(new CartLine
+                {
+                    Product = product,
+                    Quantity = quantity
+                });
+            }
         }
+
 
         /// <summary>
         /// Removes a product form the cart
