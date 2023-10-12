@@ -37,6 +37,17 @@ namespace P2FixAnAppDotNetCode.Models.Repositories
             List<Product> list = _products.Where(p => p.Stock > 0).OrderBy(p => p.Name).ToList();
             return list.ToArray();
         }
+        public Product GetProductById(int id)
+        {
+            foreach (var product in _products)
+            {
+                if (product.Id == id)
+                {
+                    return product;
+                }
+            }
+            return null;
+        }
 
         /// <summary>
         /// Update the stock of a product in the inventory by its id
