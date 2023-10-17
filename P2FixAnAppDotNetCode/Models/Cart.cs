@@ -29,7 +29,7 @@ namespace P2FixAnAppDotNetCode.Models
         public void AddItem(Product product, int quantity)
         {
             CartLine cartLine = null;
-
+            //TODO implement AddItem DONE
             // Recherchez si le produit est déjà dans le panier
             foreach (var line in _cartLines)
             {
@@ -69,7 +69,11 @@ namespace P2FixAnAppDotNetCode.Models
         public double GetTotalValue()
         {
             // TODO implement the method
-            return 0.0;
+            double _TotalValue = 0.0;
+            foreach (var line in _cartLines) { 
+            _TotalValue += line.Product.Price * line.Quantity;
+            }
+            return _TotalValue;
         }
 
         /// <summary>
@@ -78,7 +82,18 @@ namespace P2FixAnAppDotNetCode.Models
         public double GetAverageValue()
         {
             // TODO implement the method
-            return 0.0;
+           double _AverageValue = 0.0;
+            int nbArticle = 0;
+            foreach (var line in _cartLines)
+            {
+                nbArticle += line.Quantity; //Ajoute le nombre d'article 
+            }
+            // Vérifiez si nbArticle est supérieur à zéro avant de faire la division
+            if (nbArticle > 0) {
+                _AverageValue  = GetTotalValue() / nbArticle;
+            }
+          
+            return _AverageValue;  // Retournez la valeur moyenne
         }
 
         /// <summary>
@@ -87,7 +102,17 @@ namespace P2FixAnAppDotNetCode.Models
         public Product FindProductInCartLines(int productId)
         {
             // TODO implement the method
+            Product product = null;
+            //compare chaque identifiant de chaque produit avec l'identifiant fourni
+            foreach (var line in _cartLines)
+            {
+              //Renvoie le produit correspondant  à l'ID
+                if (line.Product.Id == productId) {
+                    return line.Product;
+                }
+            }
             return null;
+            
         }
 
         /// <summary>
